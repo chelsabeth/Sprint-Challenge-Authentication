@@ -10,37 +10,39 @@ describe('auth-router', function() {
     })
 
     describe('POST /register', function() {
-        it('should return 201', function() {
+        it('should return new user with text/html', function() {
            return request(server).post('/api/auth/register')
            .then(res => {
-               expect(res.status).toBe(201)
+               expect(res.type).toMatch("text/html") // tests if it's a html or text string
            }) 
         })
     })
 
     describe('POST /register err', function() {
-        it('should not return 500', function() {
+        it('should not return JSON', function() {
             return request(server).post('/api/auth/register')
             .then(res => {
-                expect(res.status).not.toBe(500);
+                expect(res.type).not.toMatch(/json/i); 
+                // tests the test above...so if you put in text/html this test will fail
             })
         })
     })
 
     describe('POST /login', function() {
-        it('should return 200', function() {
+        it('should return JSON', function() {
             return request(server).post('/api/auth/login')
             .then(res => {
-                expect(res.status).toBe(404);
+                expect(res.type).toMatch(/json/i);
             })
         })
     })
 
     describe('POST /login err', function() {
-        it('should not return 500', function() {
+        it('should not match text/html', function() {
             return request(server).post('/api/auth/login')
             .then(res => {
-                expect(res.status).not.toBe(500);
+                expect(res.type).not.toMatch("text/html"); 
+                // tests the test above...so if you put in /json/i this test will fail
             })
         })
     })
