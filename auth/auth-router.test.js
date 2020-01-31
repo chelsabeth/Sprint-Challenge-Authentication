@@ -10,16 +10,17 @@ describe('auth-router', function() {
     })
 
     describe('POST /register', function() {
-        it('should return 201', async function() {
-            const res = await request(server).post('/register');
-
-            expect(res.status).toBe(404);  
+        it('should return 201', function() {
+           return request(server).post('/api/auth/register')
+           .then(res => {
+               expect(res.status).toBe(201)
+           }) 
         })
     })
 
     describe('POST /register err', function() {
         it('should not return 500', function() {
-            return request(server).post('/register')
+            return request(server).post('/api/auth/register')
             .then(res => {
                 expect(res.status).not.toBe(500);
             })
@@ -28,7 +29,7 @@ describe('auth-router', function() {
 
     describe('POST /login', function() {
         it('should return 200', function() {
-            return request(server).post('/login')
+            return request(server).post('/api/auth/login')
             .then(res => {
                 expect(res.status).toBe(404);
             })
@@ -37,7 +38,7 @@ describe('auth-router', function() {
 
     describe('POST /login err', function() {
         it('should not return 500', function() {
-            return request(server).post('/login')
+            return request(server).post('/api/auth/login')
             .then(res => {
                 expect(res.status).not.toBe(500);
             })
